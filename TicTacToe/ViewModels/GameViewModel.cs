@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace TicTacToe
 {
@@ -26,23 +25,23 @@ namespace TicTacToe
             RestartCmd = new Command(() =>
             {
                 GameOver = false;
-                foreach (var t in Tiles) 
+                foreach (var t in Tiles)
                     t.Owner = Owner.None;
             }
             , () => true);
         }
 
-
         // -------------- game logic --------------------
 
-        /* 
+        /*
         field indices:
          1 2 3
          4 5 6
          7 8 9
         */
-        private readonly (int start, int offset)[] _winningCombinations = new (int, int)[] 
-        { 
+
+        private readonly (int start, int offset)[] _winningCombinations = new (int, int)[]
+        {
             (1, 1), (4, 1), (7, 1), // horizontal
             (1, 3), (2, 3), (3, 3), // vertical
             (1, 4), (3, 2)          // diagonal

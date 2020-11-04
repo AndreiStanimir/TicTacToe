@@ -15,11 +15,11 @@
         <local:PlayerIconConverter x:Key="PlayerIcon"></local:PlayerIconConverter>
 
         <DataTemplate DataType="{x:Type local:TileViewModel}">
-            <Button Content="{Binding Owner, Converter={StaticResource PlayerIcon}}" 
-                    FontWeight="Black" 
-                    FontSize="36" 
-                    Foreground="{Binding Owner, Converter={StaticResource FGColor}}" 
-                    Command="{Binding ClickCmd}" 
+            <Button Content="{Binding Owner, Converter={StaticResource PlayerIcon}}"
+                    FontWeight="Black"
+                    FontSize="36"
+                    Foreground="{Binding Owner, Converter={StaticResource FGColor}}"
+                    Command="{Binding ClickCmd}"
                     CommandParameter="{Binding Owner}"></Button>
         </DataTemplate>
     </Window.Resources>
@@ -38,8 +38,9 @@
         <Grid Background="#77000000" Visibility="{Binding GameOver, Converter={StaticResource BoolToVis}}">
             <Grid>
                 <TextBlock Text="{Binding Winner}" Margin="0 0 0 10" FontSize="48" FontWeight="Bold" Foreground="LightGreen"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                <Button Content="Restart" Command="{Binding RestartCmd}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25" FontSize="24" FontWeight="SemiBold"></Button>
+                <Button Content="Restart" Command="{Binding RestartCmd}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25" FontSize="24" FontWeight="SemiBold" Click="Button_Click"></Button>
             </Grid>
+            <Button x:Name="button" Content="Auto" HorizontalAlignment="Left" Margin="463,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.767,-1" Width="114" />
         </Grid>
     </Grid>
 </Window>
