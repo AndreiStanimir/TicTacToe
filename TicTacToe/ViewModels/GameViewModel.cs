@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
+using System;
 
 namespace TicTacToe
 {
@@ -12,6 +13,7 @@ namespace TicTacToe
         public string Winner { get => Get<string>(); set => Set(value); }
         public bool GameOver { get => Get<bool>(); set => Set(value); }
 
+        public bool ComputerPlaysSmart { get; set; }
         public GameViewModel()
         {
             GameOver = false;
@@ -23,7 +25,7 @@ namespace TicTacToe
 
             foreach (var t in Tiles)
                 t.Clicked += (s, e) => CheckTurn(s as TileViewModel);
-            
+
             RestartCmd = new Command(() =>
             {
                 GameOver = false;
@@ -60,11 +62,17 @@ namespace TicTacToe
             }
             CurrentPlayer = CurrentPlayer == Owner.Player1 ? Owner.Player2 : Owner.Player1;
 
-            if(CurrentPlayer==Owner.Player2)
+            if (CurrentPlayer == Owner.Player2)
             {
-                //Computer random move
-                TileViewModel move = GetFreeTiles().Take(1).First();
-                move.ClickCmd.Execute(move);
+                if (!ComputerPlaysSmart) //Computer random move
+                {
+                    TileViewModel move = GetFreeTiles().Take(1).First();
+                    move.ClickCmd.Execute(move);
+                }
+                else
+                {
+
+                }
             }
         }
 
@@ -87,5 +95,22 @@ namespace TicTacToe
             return Tiles.Where(t => t.Owner == Owner.None);
         }
 
+        
+
+        private int Minimax(TileViewModel[] tiles, Owner owner)
+        {
+            if(_winningCombinations.Any(w => HasWon(w))
+            {
+                return owner==Owner.Player2? 1 : -1;
+            }
+            IEnumerable<TileViewModel> freeTiles = tiles.Where(t => t.Owner == Owner.None);
+            for (int i = 0; i < freeTiles.Count(); i++)
+            {
+                TileViewModel[] newTiles=new TileViewModel[tiles.Length];
+                Array.Copy(tiles, newTiles, tiles.Length);
+                var oppositePlayer = owner == Owner.Player1 ? Owner.Player2 : Owner.Player1;
+                int scoreForMove = -Minimax(newTiles,oppositePlayer);
+            }
+        }
     }
 }
