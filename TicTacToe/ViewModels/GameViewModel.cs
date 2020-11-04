@@ -54,7 +54,7 @@ namespace TicTacToe
         public void CheckTurn(TileViewModel t)
         {
             t.Owner = CurrentPlayer;
-            if (_winningCombinations.Any(w => HasWon(w)))
+            if (_winningCombinations.Any(w => HasWon(w) != Owner.None))
             {
                 Winner = $"{CurrentPlayer} has won!";
                 GameOver = true;
@@ -76,7 +76,7 @@ namespace TicTacToe
             }
         }
 
-        private bool HasWon((int start, int offset) combination)
+        private Owner HasWon((int start, int offset) combination)
         {
             var owners = new Owner[]
             {
@@ -85,7 +85,15 @@ namespace TicTacToe
                 ownerOfTile(combination.offset * 2),
             };
             var sum = owners.Sum(o => (int)o);
-            return owners.All(o => o != Owner.None) && (sum == 3 || sum == 6);
+            if (owners.All(o => o != Owner.None))
+            {
+                if (sum == (int)Owner.Player1 * 3)
+                    return Owner.Player1;
+                else if (sum == (int)Owner.Player2 * 3)
+                    return Owner.Player2;
+                else return Owner.None;
+            }
+            return Owner.None;
 
             Owner ownerOfTile(int offset) => Tiles[combination.start + offset - 1].Owner; // adjust to zero-indexed array
         }
@@ -95,21 +103,36 @@ namespace TicTacToe
             return Tiles.Where(t => t.Owner == Owner.None);
         }
 
-        
+
 
         private int Minimax(TileViewModel[] tiles, Owner owner)
         {
-            if(_winningCombinations.Any(w => HasWon(w))
+            // Heavy inspiration https://towardsdatascience.com/tic-tac-toe-creating-unbeatable-ai-with-minimax-algorithm-8af9e52c1e7d
+            if (_winningCombinations.Any(w => HasWon(w) != Owner.None))
             {
-                return owner==Owner.Player2? 1 : -1;
+                return owner == Owner.Player2 ? 1 : -1;
             }
             IEnumerable<TileViewModel> freeTiles = tiles.Where(t => t.Owner == Owner.None);
+            if (freeTiles.Count() == 0)
+            {
+                return 0;
+            }
+            var score = -2;
+            var mode = -1;
             for (int i = 0; i < freeTiles.Count(); i++)
             {
-                TileViewModel[] newTiles=new TileViewModel[tiles.Length];
+                TileViewModel[] newTiles = new TileViewModel[tiles.Length];
+
+
+
                 Array.Copy(tiles, newTiles, tiles.Length);
                 var oppositePlayer = owner == Owner.Player1 ? Owner.Player2 : Owner.Player1;
-                int scoreForMove = -Minimax(newTiles,oppositePlayer);
+                int scoreForMove = -Minimax(newTiles, oppositePlayer);
+                if (scoreForMove > score)
+                {
+                    scoreForMove = score;
+                    
+                }
             }
         }
     }
