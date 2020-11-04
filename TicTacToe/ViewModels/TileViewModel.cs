@@ -5,7 +5,7 @@ namespace TicTacToe
     public class TileViewModel : ViewModelBase
     {
         public event EventHandler Clicked;
-
+        public int Id { get; set; }
         public Owner Owner { get => Get<Owner>(); set { Set(value); ClickCmd?.UpdateCanExecute(); } }
 
         public Command ClickCmd { get; }
@@ -14,6 +14,7 @@ namespace TicTacToe
         {
             Owner = Owner.None;
             ClickCmd = new Command(() => Clicked?.Invoke(this, null), () => Owner == Owner.None);
+            Id = fieldId;
         }
     }
 }

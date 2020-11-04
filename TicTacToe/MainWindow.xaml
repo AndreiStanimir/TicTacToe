@@ -38,7 +38,7 @@
         <Grid Background="#77000000" Visibility="{Binding GameOver, Converter={StaticResource BoolToVis}}">
             <Grid>
                 <TextBlock Text="{Binding Winner}" Margin="0 0 0 10" FontSize="48" FontWeight="Bold" Foreground="LightGreen"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                <Button Content="Restart" Command="{Binding RestartCmd}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25" FontSize="24" FontWeight="SemiBold" Click="Button_Click"></Button>
+                <Button Content="Restart" Command="{Binding RestartCmd}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25" FontSize="24" FontWeight="SemiBold" ></Button>
             </Grid>
             <Button x:Name="button" Content="Auto" HorizontalAlignment="Left" Margin="463,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.767,-1" Width="114" />
         </Grid>

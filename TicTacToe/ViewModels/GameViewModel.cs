@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace TicTacToe
 {
@@ -21,7 +23,7 @@ namespace TicTacToe
 
             foreach (var t in Tiles)
                 t.Clicked += (s, e) => CheckTurn(s as TileViewModel);
-
+            
             RestartCmd = new Command(() =>
             {
                 GameOver = false;
@@ -54,8 +56,16 @@ namespace TicTacToe
             {
                 Winner = $"{CurrentPlayer} has won!";
                 GameOver = true;
+                return;
             }
             CurrentPlayer = CurrentPlayer == Owner.Player1 ? Owner.Player2 : Owner.Player1;
+
+            if(CurrentPlayer==Owner.Player2)
+            {
+                //Computer random move
+                TileViewModel move = GetFreeTiles().Take(1).First();
+                move.ClickCmd.Execute(move);
+            }
         }
 
         private bool HasWon((int start, int offset) combination)
@@ -71,5 +81,11 @@ namespace TicTacToe
 
             Owner ownerOfTile(int offset) => Tiles[combination.start + offset - 1].Owner; // adjust to zero-indexed array
         }
+
+        private IEnumerable<TileViewModel> GetFreeTiles()
+        {
+            return Tiles.Where(t => t.Owner == Owner.None);
+        }
+
     }
 }
