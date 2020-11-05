@@ -58,22 +58,27 @@ namespace TicTacToe
             {
                 Winner = $"{CurrentPlayer} has won!";
                 GameOver = true;
+                //save to file
                 return;
             }
-            if (GetFreeTiles().Count()==0)
+            if (GetFreeTiles().Count() == 0)
             {
                 Winner = "Draw!";
                 GameOver = true;
                 return;
             }
-            
+
             CurrentPlayer = CurrentPlayer == Owner.Player1 ? Owner.Computer : Owner.Player1;
 
             if (CurrentPlayer == Owner.Computer)
             {
-                if (ComputerPlaysSmart) //Computer random move
+                if (!ComputerPlaysSmart) //Computer random move
                 {
-                    TileViewModel move = GetFreeTiles().Take(1).First();
+                    var moves = GetFreeTiles();
+                    var random = new Random();
+                    var index = random.Next(moves.Count());
+
+                    var move = moves.ElementAt(index);
                     move.ClickCmd.Execute(move);
                 }
                 else
@@ -89,10 +94,10 @@ namespace TicTacToe
         }
         public bool CheckWin(TileViewModel[] tiles)
         {
-            return _winningCombinations.Any(w => HasWon(w,tiles) != Owner.None);
+            return _winningCombinations.Any(w => HasWon(w, tiles) != Owner.None);
         }
 
-        public Owner HasWon((int start, int offset) combination,TileViewModel[] tiles)
+        public Owner HasWon((int start, int offset) combination, TileViewModel[] tiles)
         {
             var owners = new Owner[]
             {
@@ -154,7 +159,7 @@ namespace TicTacToe
             // Heavy inspiration https://towardsdatascience.com/tic-tac-toe-creating-unbeatable-ai-with-minimax-algorithm-8af9e52c1e7d
             if (CheckWin(tiles))
             {
-                return owner == Owner.Computer? 1 : -1;
+                return owner == Owner.Computer ? 1 : -1;
             }
             IEnumerable<TileViewModel> freeTiles = tiles.Where(t => t.Owner == Owner.None);
             if (freeTiles.Count() == 0)
@@ -176,14 +181,14 @@ namespace TicTacToe
 
                     var oppositePlayer = owner == Owner.Player1 ? Owner.Computer : Owner.Player1;
                     int scoreForMove = Minimax(newTiles, oppositePlayer);
-              
+
                     if (scoreForMove > score)
                     {
                         score = scoreForMove;
                     }
                 }
             }
-            
+
             return score;
         }
     }
