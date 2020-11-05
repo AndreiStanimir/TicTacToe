@@ -4,6 +4,6 @@
     {
         None,
         Player1=-1,
-        Player2=1,
+        Computer=1, //Computer
     }
 }
