@@ -33,11 +33,18 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.ColumnSpan="3" Margin="0,0,0,600" Grid.Column="1" Background="Green">
             <Button x:Name="button" Content="Activate Auto Mode" Margin="10,0,0,0" Click="button_Click" HorizontalAlignment="Left" Width="148" RenderTransformOrigin="1,0" Height="34" VerticalAlignment="Center"/>
-            <Label x:Name="label_score" Content="0-0" HorizontalAlignment="Left" Margin="440,37,0,0" VerticalAlignment="Top"/>
+            <TextBlock x:Name="label_score" HorizontalAlignment="Left" Margin="325,37,0,0" VerticalAlignment="Top" Width="143">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Player {0} - {1} Computer" >
+                        <Binding Path="Scores.Player"/>
+                        <Binding Path="Scores.Computer"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
         </Grid>
         <Popup Width="100" Height="103">
-          <TextBox x:Name="Textbox_Start" Width="103" Canvas.Left="-14" Canvas.Top="-57"></TextBox>
-          <!--<Button x:Name="Button_Start" Canvas.Left="23" Canvas.Top="-15" Click="ButtonStart_Click">Start</Button>-->
+            <TextBox x:Name="Textbox_Start" Width="103" Canvas.Left="-14" Canvas.Top="-57"></TextBox>
+            <!--<Button x:Name="Button_Start" Canvas.Left="23" Canvas.Top="-15" Click="ButtonStart_Click">Start</Button>-->
         </Popup>
         <DockPanel x:Name="GamePanel" LastChildFill="True" Grid.ColumnSpan="4" Margin="0,84,0,0">
 

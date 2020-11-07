@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System;
+using TicTacToe.Common;
 
 namespace TicTacToe
 {
@@ -12,9 +13,11 @@ namespace TicTacToe
         public Command RestartCmd { get; }
         public string Winner { get => Get<string>(); set => Set(value); }
         public bool GameOver { get => Get<bool>(); set => Set(value); }
-
         public bool ComputerPlaysSmart { get; set; }
-        public GameViewModel()
+
+        public Scores Scores { get => Get<Scores>(); set => Set(value); }
+    
+    public GameViewModel()
         {
             GameOver = false;
             CurrentPlayer = Owner.Player1;
@@ -33,6 +36,9 @@ namespace TicTacToe
                     t.Owner = Owner.None;
             }
             , () => true);
+
+            Scores = FileWrite.ReadScores();
+            
         }
 
         // -------------- game logic --------------------
@@ -57,7 +63,15 @@ namespace TicTacToe
             if (CheckWin())
             {
                 Winner = $"{CurrentPlayer} has won!";
+                
                 GameOver = true;
+                FileWrite.WriteWinner(CurrentPlayer);
+                //Scores.AddScore(CurrentPlayer);
+                if (CurrentPlayer == Owner.Player1)
+                    Scores.Player += 1;
+                else
+                    Scores.Computer += 1;
+                FileWrite.WriteTotalScore(Scores);
                 //save to file
                 return;
             }
@@ -65,6 +79,7 @@ namespace TicTacToe
             {
                 Winner = "Draw!";
                 GameOver = true;
+                FileWrite.WriteWinner(CurrentPlayer);
                 return;
             }
 
