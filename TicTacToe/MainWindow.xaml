@@ -13,8 +13,8 @@
         <local:OwnerToColorConverter x:Key="FGColor"></local:OwnerToColorConverter>
         <local:BoolToVisibilityConverter x:Key="BoolToVis"></local:BoolToVisibilityConverter>
         <local:PlayerIconConverter x:Key="PlayerIcon"></local:PlayerIconConverter>
-
-        <DataTemplate DataType="{x:Type local:TileViewModel}">
+        <local:ComputerAiConverter x:Key="AIConverter"></local:ComputerAiConverter>
+      <DataTemplate DataType="{x:Type local:TileViewModel}">
             <Button Content="{Binding Owner, Converter={StaticResource PlayerIcon}}"
                     FontWeight="Black"
                     FontSize="36"
@@ -33,6 +33,7 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.ColumnSpan="3" Margin="0,0,0,600" Grid.Column="1" Background="LightBlue">
             <Button x:Name="button" Content="Activate Auto Mode" Margin="10,0,0,0" Click="button_Click" HorizontalAlignment="Left" Width="148" RenderTransformOrigin="1,0" Height="34" VerticalAlignment="Center"/>
+            <TextBlock DockPanel.Dock="Top" Text="{Binding ComputerPlaysSmart,Converter={StaticResource AIConverter}}" Margin="5" HorizontalAlignment="Center"></TextBlock>
             <TextBlock HorizontalAlignment="Left" Margin="325,37,0,0" VerticalAlignment="Top" Width="143">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}Player {0} - {1} Computer" >

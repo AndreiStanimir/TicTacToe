@@ -13,7 +13,7 @@ namespace TicTacToe
         public Command RestartCmd { get; }
         public string Winner { get => Get<string>(); set => Set(value); }
         public bool GameOver { get => Get<bool>(); set => Set(value); }
-        public bool ComputerPlaysSmart { get; set; }
+        public bool ComputerPlaysSmart { get => Get<bool>(); set => Set(value); }
 
         public Scores Scores { get => Get<Scores>(); set => Set(value); }
     
