@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.TextFormatting;
 
 namespace TicTacToe
 {
@@ -8,6 +10,7 @@ namespace TicTacToe
     public partial class MainWindow : Window
     {
         PopUpMessage popUpMessage;
+        TextBox popupTextBox;
         public MainWindow()
         {
             InitializeComponent();
@@ -20,16 +23,17 @@ namespace TicTacToe
         {
 
             popUpMessage = new PopUpMessage();
+            popUpMessage.Button_Start.Click -= buttonStart_Click;
             popUpMessage.Button_Start.Click += buttonStart_Click;
-
+            popupTextBox = popUpMessage.Textbox_Start;
             popUpMessage.Show();
 
         }
         private void buttonStart_Click(object sender, RoutedEventArgs e)
         {
-            if (Textbox_Start.Text == "go go go")
-                {
-
+            string Text = popUpMessage.Textbox_Start.Text.Trim().ToLower();
+            if (Text == "go go go")
+            {
                 ((GameViewModel)DataContext).ComputerPlaysSmart = true;
             }
             else
