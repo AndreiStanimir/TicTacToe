@@ -25,19 +25,12 @@ namespace TicTacToe.Common
                     streamWriter.WriteLine($"Winner: {player} at {DateTime.Now}");
                 }
             }
-
-
-
-
         }
         static public void WriteTotalScore(Scores score)
         {
             using (StreamWriter streamWriter = new StreamWriter(pathToTotalScores))
             {
-                JsonSerializerOptions options = new JsonSerializerOptions
-                {
 
-                };
                 string s = JsonSerializer.Serialize<Scores>(score);
                 streamWriter.WriteLine(s);
             }

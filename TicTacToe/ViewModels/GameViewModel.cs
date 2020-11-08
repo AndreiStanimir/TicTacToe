@@ -39,6 +39,7 @@ namespace TicTacToe
 
             Scores = FileWrite.ReadScores();
             
+            ComputerPlaysSmart=true;
         }
 
         // -------------- game logic --------------------

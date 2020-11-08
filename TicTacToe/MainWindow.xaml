@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         Title="TicTacToe"
-        Height="700" Width="600" MinWidth="600" MinHeight="700">
+        Height="700" Width="600" MinWidth="600" MinHeight="700" Closing="Window_Closing">
 
     <Window.Resources>
         <local:OwnerToColorConverter x:Key="FGColor"></local:OwnerToColorConverter>
