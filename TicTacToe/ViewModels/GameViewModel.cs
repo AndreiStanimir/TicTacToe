@@ -159,7 +159,7 @@ namespace TicTacToe
                     newTiles[i].Owner = owner;
 
                     var oppositePlayer = owner == Owner.Player1 ? Owner.Computer : Owner.Player1;
-                    int scoreForMove = Minimax(newTiles, oppositePlayer);
+                    int scoreForMove = -Minimax(newTiles, oppositePlayer,false);
 
                     if (scoreForMove > score)
                     {
@@ -170,18 +170,19 @@ namespace TicTacToe
             }
             return move;
         }
-        private int Minimax(TileViewModel[] tiles, Owner owner)
+        private int Minimax(TileViewModel[] tiles, Owner owner,bool isMachineMove)
         {
             // Heavy inspiration https://towardsdatascience.com/tic-tac-toe-creating-unbeatable-ai-with-minimax-algorithm-8af9e52c1e7d
             if (CheckWin(tiles))
             {
-                return owner == Owner.Computer ? 1 : -1;
+                var me = isMachineMove ? Owner.Computer : Owner.Player1;
+                return me!=owner ? 1 : -1;
             }
-            IEnumerable<TileViewModel> freeTiles = tiles.Where(t => t.Owner == Owner.None);
-            if (freeTiles.Count() == 0)
-            {
-                return 0;
-            }
+            //IEnumerable<TileViewModel> freeTiles = tiles.Where(t => t.Owner == Owner.None);
+            //if (freeTiles.Count() == 0)
+            //{
+            //    return 0;
+            //}
             var score = -1000;
             for (int i = 0; i < tiles.Count(); i++)
             {
@@ -196,15 +197,18 @@ namespace TicTacToe
                     newTiles[i].Owner = owner;
 
                     var oppositePlayer = owner == Owner.Player1 ? Owner.Computer : Owner.Player1;
-                    int scoreForMove = Minimax(newTiles, oppositePlayer);
+                    int scoreForMove = -Minimax(newTiles, oppositePlayer,!isMachineMove);
 
+                    if (scoreForMove == 1)
+                        return scoreForMove;
                     if (scoreForMove > score)
                     {
                         score = scoreForMove;
                     }
                 }
             }
-
+            if (score == -1000)
+                return 0;
             return score;
         }
     }

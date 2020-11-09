@@ -83,7 +83,7 @@ namespace UnitTests
             Assert.AreEqual("Draw!", game.Winner);
         }
         [Test]
-        public void ComputerChoice()
+        public void MiniMax()
         {
             //var player = new TileViewModel(1);
             //player.Owner = Owner.Player1;
@@ -93,12 +93,12 @@ namespace UnitTests
                 player,player,empty,
                 empty,empty,empty
             };
-            game.CurrentPlayer = Owner.Computer;
-            game.CheckTurn(game.Tiles[0]);
+            game.CurrentPlayer = Owner.Player1;
+            game.CheckTurn(game.Tiles[4]);
 
             Assert.AreEqual(false, game.CheckWin());
-            //Assert.AreEqual(-1,)
             Assert.AreEqual(5, game.ComputeBestMove());
+            //Assert.AreEqual(Owner.Computer, game.Tiles[5].Owner);
             //Assert.AreEqual("Draw!", game.Winner);
         }
     }
