@@ -3,7 +3,7 @@
     public enum Owner
     {
         None,
-        Player1,
-        Player2,
+        Player1=-1,
+        Computer=1, //Computer
     }
 }

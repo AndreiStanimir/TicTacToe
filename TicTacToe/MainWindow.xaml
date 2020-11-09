@@ -7,25 +7,47 @@
         mc:Ignorable="d"
         WindowStyle="ToolWindow"
         Title="TicTacToe"
-        Height="600" Width="600">
+        Height="700" Width="600" MinWidth="600" MinHeight="700" Closing="Window_Closing">
 
     <Window.Resources>
         <local:OwnerToColorConverter x:Key="FGColor"></local:OwnerToColorConverter>
         <local:BoolToVisibilityConverter x:Key="BoolToVis"></local:BoolToVisibilityConverter>
         <local:PlayerIconConverter x:Key="PlayerIcon"></local:PlayerIconConverter>
-
-        <DataTemplate DataType="{x:Type local:TileViewModel}">
-            <Button Content="{Binding Owner, Converter={StaticResource PlayerIcon}}" 
-                    FontWeight="Black" 
-                    FontSize="36" 
-                    Foreground="{Binding Owner, Converter={StaticResource FGColor}}" 
-                    Command="{Binding ClickCmd}" 
+        <local:ComputerAiConverter x:Key="AIConverter"></local:ComputerAiConverter>
+      <DataTemplate DataType="{x:Type local:TileViewModel}">
+            <Button Content="{Binding Owner, Converter={StaticResource PlayerIcon}}"
+                    FontWeight="Black"
+                    FontSize="36"
+                    Foreground="{Binding Owner, Converter={StaticResource FGColor}}"
+                    Command="{Binding ClickCmd}"
                     CommandParameter="{Binding Owner}"></Button>
         </DataTemplate>
     </Window.Resources>
 
     <Grid>
-        <DockPanel LastChildFill="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="49*"/>
+            <ColumnDefinition Width="157*"/>
+            <ColumnDefinition Width="93*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.ColumnSpan="3" Margin="0,0,0,600" Grid.Column="1" Background="LightBlue">
+            <Button x:Name="button" Content="Activate Auto Mode" Margin="10,0,0,0" Click="button_Click" HorizontalAlignment="Left" Width="148" RenderTransformOrigin="1,0" Height="34" VerticalAlignment="Center"/>
+            <TextBlock DockPanel.Dock="Top" Text="{Binding ComputerPlaysSmart,Converter={StaticResource AIConverter}}" Margin="5" HorizontalAlignment="Center"></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="325,37,0,0" VerticalAlignment="Top" Width="143">
+                <TextBlock.Text>
+                    <MultiBinding StringFormat="{}Player {0} - {1} Computer" >
+                        <Binding Path="Scores.Player"/>
+                        <Binding Path="Scores.Computer"/>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+        </Grid>
+        <Popup Width="100" Height="103">
+            <!--<Button x:Name="Button_Start" Canvas.Left="23" Canvas.Top="-15" Click="ButtonStart_Click">Start</Button>-->
+        </Popup>
+        <DockPanel x:Name="GamePanel" LastChildFill="True" Grid.ColumnSpan="4" Margin="0,84,0,0">
+
             <TextBlock DockPanel.Dock="Top" Text="{Binding CurrentPlayer}" Margin="5" HorizontalAlignment="Center"></TextBlock>
             <ItemsControl ItemsSource="{Binding Tiles}">
                 <ItemsControl.ItemsPanel>
@@ -35,11 +57,18 @@
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </DockPanel>
-        <Grid Background="#77000000" Visibility="{Binding GameOver, Converter={StaticResource BoolToVis}}">
-            <Grid>
+        <Grid Background="#77000000" Visibility="{Binding GameOver, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="4" Margin="0,84,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="118*"/>
+                <ColumnDefinition Width="181*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.ColumnSpan="3">
                 <TextBlock Text="{Binding Winner}" Margin="0 0 0 10" FontSize="48" FontWeight="Bold" Foreground="LightGreen"  VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                <Button Content="Restart" Command="{Binding RestartCmd}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25" FontSize="24" FontWeight="SemiBold"></Button>
+                <Button Content="Restart" Command="{Binding RestartCmd}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="25" FontSize="24" FontWeight="SemiBold" ></Button>
             </Grid>
+
+
         </Grid>
     </Grid>
 </Window>
