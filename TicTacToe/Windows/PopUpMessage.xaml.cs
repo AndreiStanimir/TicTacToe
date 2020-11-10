@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace TicTacToe
+namespace TicTacToe.Windows
 {
     /// <summary>
     /// Interaction logic for PopUpMessage.xaml

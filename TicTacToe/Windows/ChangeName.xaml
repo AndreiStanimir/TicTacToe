@@ -1,0 +1,15 @@
+﻿<Window x:Class="TicTacToe.Windows.ChangeName"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TicTacToe"
+        mc:Ignorable="d" Height="200" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="Manual" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStyle="None">
+
+  <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+    <TextBox x:Name="Textbox_ChangeName" MaxLength="10" MaxLines="1" Width="141" Margin="0,10,0,0"/>
+    <Button x:Name="Button_ChangeName"  Click="Button_ChangeName_Click" Width="116" RenderTransformOrigin="2.94,1.603" Content="Change Name" Margin="0,10,0,0"/>
+  </StackPanel>
+
+
+</Window>

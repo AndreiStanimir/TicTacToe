@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TicTacToe.Common;
 
 namespace TicTacToe
 {
     public class GameViewModel : ViewModelBase
     {
-        public Owner CurrentPlayer { get => Get<Owner>(); set => Set(value); }
+        public Owner CurrentPlayer { get => Get<Owner>(); set =>  Set(value); }
         public TileViewModel[] Tiles { get; set; }
         public Command RestartCmd { get; }
         public string Winner { get => Get<string>(); set => Set(value); }
         public bool GameOver { get => Get<bool>(); set => Set(value); }
         public bool ComputerPlaysSmart { get => Get<bool>(); set => Set(value); }
-
+        public string PlayerName { get => Get<string>(); set => Set(value); }
         public Scores Scores { get => Get<Scores>(); set => Set(value); }
 
         public GameViewModel()
         {
             GameOver = false;
             CurrentPlayer = Owner.Player1;
+            PlayerName = "Player";
             Tiles = Enumerable
                 .Range(1, 9)
                 .Select(i => new TileViewModel(i))
@@ -60,6 +62,7 @@ namespace TicTacToe
         public void CheckTurn(TileViewModel t)
         {
             t.Owner = CurrentPlayer;
+
             if (CheckWin())
             {
                 Winner = $"{CurrentPlayer} has won!";
@@ -85,20 +88,27 @@ namespace TicTacToe
 
             if (CurrentPlayer == Owner.Computer)
             {
-                if (!ComputerPlaysSmart) //Computer random move
-                {
-                    var moves = GetFreeTiles();
-                    var random = new Random();
-                    var index = random.Next(moves.Count());
+                Task task = ComputerMove();
+            }
+        }
 
-                    var move = moves.ElementAt(index);
-                    move.ClickCmd.Execute(move);
-                }
-                else
-                {
-                    int move_index = ComputeBestMove();
-                    Tiles[move_index].ClickCmd.Execute(Tiles[move_index]);
-                }
+        private async Task ComputerMove()
+        {
+            await Task.Delay(500);
+            if (!ComputerPlaysSmart) //Computer random move
+            {
+                var moves = GetFreeTiles();
+                var random = new Random();
+                var index = random.Next(moves.Count());
+
+                var move = moves.ElementAt(index);
+                move.ClickCmd.Execute(move);
+            }
+            else
+            {
+                int move_index = ComputeBestMove();
+
+                Tiles[move_index].ClickCmd.Execute(Tiles[move_index]);
             }
         }
 
