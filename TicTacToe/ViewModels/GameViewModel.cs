@@ -39,7 +39,6 @@ namespace TicTacToe
 
             Scores = FileWrite.ReadScores();
 
-            ComputerPlaysSmart = true;
         }
 
         // -------------- game logic --------------------
@@ -67,13 +66,11 @@ namespace TicTacToe
 
                 GameOver = true;
                 FileWrite.WriteWinner(CurrentPlayer);
-                //Scores.AddScore(CurrentPlayer);
                 if (CurrentPlayer == Owner.Player1)
                     Scores.Player += 1;
                 else
                     Scores.Computer += 1;
                 FileWrite.WriteTotalScore(Scores);
-                //save to file
                 return;
             }
             if (GetFreeTiles().Count() == 0)

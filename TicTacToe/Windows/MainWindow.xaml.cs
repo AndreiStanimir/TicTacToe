@@ -18,16 +18,16 @@ namespace TicTacToe
             popUpMessage = new PopUpMessage();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void ButtonAutoMode_Click(object sender, RoutedEventArgs e)
         {
             popUpMessage = new PopUpMessage();
-            popUpMessage.Button_Start.Click -= buttonStart_Click;
-            popUpMessage.Button_Start.Click += buttonStart_Click;
+            popUpMessage.Button_Start.Click -= ButtonStart_Click;
+            popUpMessage.Button_Start.Click += ButtonStart_Click;
             popupTextBox = popUpMessage.Textbox_Start;
             popUpMessage.Show();
         }
 
-        private void buttonStart_Click(object sender, RoutedEventArgs e)
+        private void ButtonStart_Click(object sender, RoutedEventArgs e)
         {
             string Text = popUpMessage.Textbox_Start.Text.Trim().ToLower();
             if (Text == "go go go")
