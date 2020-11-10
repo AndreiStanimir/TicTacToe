@@ -5,22 +5,21 @@ namespace UnitTests
 {
     public class BoardTest
     {
-        GameViewModel game;
-        TileViewModel player, computer, empty;
-        [SetUp]
+        private GameViewModel game;
+        private TileViewModel player, computer, empty;
 
+        [SetUp]
         public void Setup()
         {
             game = new GameViewModel();
             player = new TileViewModel(1);
             player.Owner = Owner.Player1;
-            
+
             computer = new TileViewModel(1);
             computer.Owner = Owner.Computer;
-            
+
             empty = new TileViewModel(1);
             empty.Owner = Owner.None;
-
         }
 
         [Test]
@@ -37,6 +36,7 @@ namespace UnitTests
             Assert.AreEqual(game.CheckWin(), true);
             Assert.AreEqual(game.Winner, $"{Owner.Player1} has won!");
         }
+
         [Test]
         public void PlayerWins1()
         {
@@ -48,10 +48,11 @@ namespace UnitTests
             };
             game.CurrentPlayer = Owner.Player1;
             game.CheckTurn(game.Tiles[0]);
-            
+
             Assert.AreEqual(game.CheckWin(), true);
             Assert.AreEqual(game.Winner, $"{Owner.Player1} has won!");
         }
+
         [Test]
         public void ComputerWins()
         {
@@ -63,10 +64,11 @@ namespace UnitTests
             };
             game.CurrentPlayer = Owner.Computer;
             game.CheckTurn(game.Tiles[0]);
-            
-            Assert.AreEqual( true, game.CheckWin());
-            Assert.AreEqual($"{Owner.Computer} has won!",game.Winner);
+
+            Assert.AreEqual(true, game.CheckWin());
+            Assert.AreEqual($"{Owner.Computer} has won!", game.Winner);
         }
+
         [Test]
         public void Draw()
         {
@@ -82,6 +84,7 @@ namespace UnitTests
             Assert.AreEqual(false, game.CheckWin());
             Assert.AreEqual("Draw!", game.Winner);
         }
+
         [Test]
         public void MiniMax()
         {

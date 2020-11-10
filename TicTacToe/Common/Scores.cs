@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
-namespace TicTacToe.Common
+﻿namespace TicTacToe.Common
 {
-    public class Scores :ViewModelBase
+    public class Scores : ViewModelBase
     {
-        
         public int Player { get => Get<int>(); set => Set(value); }
         public int Computer { get => Get<int>(); set => Set(value); }
 

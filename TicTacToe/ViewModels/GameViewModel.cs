@@ -1,7 +1,6 @@
-﻿using System.Linq;
+﻿using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System;
+using System.Linq;
 using TicTacToe.Common;
 
 namespace TicTacToe
@@ -16,8 +15,8 @@ namespace TicTacToe
         public bool ComputerPlaysSmart { get => Get<bool>(); set => Set(value); }
 
         public Scores Scores { get => Get<Scores>(); set => Set(value); }
-    
-    public GameViewModel()
+
+        public GameViewModel()
         {
             GameOver = false;
             CurrentPlayer = Owner.Player1;
@@ -38,8 +37,8 @@ namespace TicTacToe
             , () => true);
 
             Scores = FileWrite.ReadScores();
-            
-            ComputerPlaysSmart=true;
+
+            ComputerPlaysSmart = true;
         }
 
         // -------------- game logic --------------------
@@ -64,7 +63,7 @@ namespace TicTacToe
             if (CheckWin())
             {
                 Winner = $"{CurrentPlayer} has won!";
-                
+
                 GameOver = true;
                 FileWrite.WriteWinner(CurrentPlayer);
                 //Scores.AddScore(CurrentPlayer);
@@ -104,10 +103,12 @@ namespace TicTacToe
                 }
             }
         }
+
         public bool CheckWin()
         {
             return CheckWin(Tiles);
         }
+
         public bool CheckWin(TileViewModel[] tiles)
         {
             return _winningCombinations.Any(w => HasWon(w, tiles) != Owner.None);
@@ -140,7 +141,6 @@ namespace TicTacToe
             return Tiles.Where(t => t.Owner == Owner.None);
         }
 
-
         public int ComputeBestMove()
         {
             var owner = Owner.Computer;
@@ -159,7 +159,7 @@ namespace TicTacToe
                     newTiles[i].Owner = owner;
 
                     var oppositePlayer = owner == Owner.Player1 ? Owner.Computer : Owner.Player1;
-                    int scoreForMove = -Minimax(newTiles, oppositePlayer,false);
+                    int scoreForMove = -Minimax(newTiles, oppositePlayer, false);
 
                     if (scoreForMove > score)
                     {
@@ -170,13 +170,14 @@ namespace TicTacToe
             }
             return move;
         }
-        private int Minimax(TileViewModel[] tiles, Owner owner,bool isMachineMove)
+
+        private int Minimax(TileViewModel[] tiles, Owner owner, bool isMachineMove)
         {
             // Heavy inspiration https://towardsdatascience.com/tic-tac-toe-creating-unbeatable-ai-with-minimax-algorithm-8af9e52c1e7d
             if (CheckWin(tiles))
             {
                 var me = isMachineMove ? Owner.Computer : Owner.Player1;
-                return me!=owner ? 1 : -1;
+                return me != owner ? 1 : -1;
             }
             //IEnumerable<TileViewModel> freeTiles = tiles.Where(t => t.Owner == Owner.None);
             //if (freeTiles.Count() == 0)
@@ -197,7 +198,7 @@ namespace TicTacToe
                     newTiles[i].Owner = owner;
 
                     var oppositePlayer = owner == Owner.Player1 ? Owner.Computer : Owner.Player1;
-                    int scoreForMove = -Minimax(newTiles, oppositePlayer,!isMachineMove);
+                    int scoreForMove = -Minimax(newTiles, oppositePlayer, !isMachineMove);
 
                     if (scoreForMove == 1)
                         return scoreForMove;

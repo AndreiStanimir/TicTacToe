@@ -4,14 +4,15 @@ using System.Text.Json;
 
 namespace TicTacToe.Common
 {
-    static class FileWrite
+    internal static class FileWrite
     {
-        const string pathToScores = "scores.txt";
-        const string pathToTotalScores = "scores_total.json";
+        private const string pathToScores = "scores.txt";
+        private const string pathToTotalScores = "scores_total.json";
+
         static FileWrite()
         {
-
         }
+
         static public void WriteWinner(Owner player)
         {
             using (StreamWriter streamWriter = new StreamWriter(pathToScores, true))
@@ -26,15 +27,16 @@ namespace TicTacToe.Common
                 }
             }
         }
+
         static public void WriteTotalScore(Scores score)
         {
             using (StreamWriter streamWriter = new StreamWriter(pathToTotalScores))
             {
-
                 string s = JsonSerializer.Serialize<Scores>(score);
                 streamWriter.WriteLine(s);
             }
         }
+
         static public Scores ReadScores()
         {
             try
@@ -42,7 +44,6 @@ namespace TicTacToe.Common
                 string s = File.ReadAllText(pathToTotalScores);
                 Scores score = JsonSerializer.Deserialize<Scores>(s);
                 return score;
-
             }
             catch (FileNotFoundException)
             {
