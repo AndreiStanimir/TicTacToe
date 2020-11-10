@@ -187,11 +187,7 @@ namespace TicTacToe
                 var me = isMachineMove ? Owner.Computer : Owner.Player1;
                 return me != owner ? 1 : -1;
             }
-            //IEnumerable<TileViewModel> freeTiles = tiles.Where(t => t.Owner == Owner.None);
-            //if (freeTiles.Count() == 0)
-            //{
-            //    return 0;
-            //}
+            
             var score = -1000;
             for (int i = 0; i < tiles.Count(); i++)
             {
