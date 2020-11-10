@@ -31,6 +31,7 @@ namespace TicTacToe
             RestartCmd = new Command(() =>
             {
                 GameOver = false;
+                CurrentPlayer = Owner.Player1;
                 foreach (var t in Tiles)
                     t.Owner = Owner.None;
             }

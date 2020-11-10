@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TicTacToe"
-        mc:Ignorable="d"
-        Title="PopUpMessage" Height="244" Width="333">
-    <Grid Margin="0,0,477,175">
-        <Canvas Margin="127,102,537,256">
-            <TextBox x:Name="Textbox_Start" Width="103" Canvas.Left="-14" Canvas.Top="-57"></TextBox>
-            <Button x:Name="Button_Start" Canvas.Left="23" Canvas.Top="-15" Click="ButtonStart_Click">Start</Button>
-        </Canvas>
-    </Grid>
+        mc:Ignorable="d" Height="200" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" SizeToContent="Manual" HorizontalAlignment="Center" VerticalAlignment="Center" WindowStyle="None">
+
+    <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock x:Name="textBlock" Text="Secret code:" TextWrapping="Wrap" Grid.ColumnSpan="3" Margin="0,10,0,0" Grid.RowSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBox x:Name="Textbox_Start" MaxLength="10" MaxLines="1" Width="141" Margin="0,10,0,0"/>
+        <Button x:Name="Button_Start"  Click="ButtonStart_Click" Width="50" RenderTransformOrigin="2.94,1.603" Content="Start" Margin="0,10,0,0"/>
+    </StackPanel>
+
+
 </Window>
